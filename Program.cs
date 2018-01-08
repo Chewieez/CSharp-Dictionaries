@@ -34,29 +34,54 @@ namespace dictionaries
 
 
             // Iterate over the purchases and update the valuation for each stock
+            // foreach ((string ticker, int shares, double price) purchase in purchases)
+            // {
+            //     foreach (KeyValuePair<string, string> stock in stocks)
+            //     {
+            //         // Does the company name key already exist in the report dictionary?
+            //         if (stock.Key.Contains(purchase.ticker))
+            //         {
+
+            //             // If it does, update the total valuation
+            //             if (totalOwnership.ContainsKey(stock.Value))
+            //             {
+            //                 totalOwnership[stock.Value] += purchase.shares * purchase.price;
+            //             }
+            //             // If not, add the new key and set its value
+            //             else
+            //             {
+            //                 totalOwnership.Add(stock.Value, (purchase.shares * purchase.price));
+            //             }
+            //         }
+
+            //     }
+            // }
+            // foreach (KeyValuePair<string, double> report in totalOwnership)
+            // {
+            //     Console.WriteLine($"{report.Key} ${report.Value:f2}");
+
+            // }
+
+            // trying again with different approach and one less foreach loop
+            // Iterate over the purchases and update the valuation for each stock
             foreach ((string ticker, int shares, double price) purchase in purchases)
             {
-                foreach (KeyValuePair<string, string> stock in stocks)
+                string stockName = stocks[purchase.ticker];
+                // Does the company name key already exist in the report dictionary?
+                // If it does, update the total valuation
+                if (totalOwnership.ContainsKey(stockName))
                 {
-                    // Does the company name key already exist in the report dictionary?
-                    if (stock.Key.Contains(purchase.ticker))
-                    {
-
-                        // If it does, update the total valuation
-                        if (totalOwnership.ContainsKey(stock.Value))
-                        {
-                            totalOwnership[stock.Value] += purchase.shares * purchase.price;
-                        }
-                        // If not, add the new key and set its value
-                        else
-                        {
-                            totalOwnership.Add(stock.Value, (purchase.shares * purchase.price));
-                        }
-                    }
-
+                    totalOwnership[stockName] += purchase.shares * purchase.price;
+                }
+                // If not, add the new key and set its value
+                else
+                {
+                    totalOwnership.Add(stockName, (purchase.shares * purchase.price));
                 }
             }
-            foreach (KeyValuePair<string, double> report in totalOwnership) {
+
+            foreach (KeyValuePair<string, double> report in totalOwnership)
+            {
                 Console.WriteLine($"{report.Key} ${report.Value:f2}");
 
             }
